@@ -7,7 +7,7 @@ import requests
 import json
 import sqlite3
 
-con = sqlite3.connect('banco.db')
+con = sqlite3.connect('/banco.db')
 df = pd.read_sql('SELECT * FROM dados', con)
 df['Quantidade'] = df['Produto'].map(df['Produto'].value_counts())
 

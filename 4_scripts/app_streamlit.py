@@ -7,14 +7,20 @@ import requests
 import json
 import sqlite3
 
-# Conexão com o banco de dados
+db_path = 'banco.db'
+
 try:
-    con = sqlite3.connect('banco.db')
-    query = "SELECT * FROM dados"  # Altere para o nome correto da tabela
+    con = sqlite3.connect(db_path)
+    query = "SELECT * FROM dados"  # Certifique-se de usar o nome correto da tabela
     df = pd.read_sql_query(query, con)
     con.close()
+    st.success("Conexão com o banco realizada com sucesso!")
+except sqlite3.OperationalError as e:
+    st.error(f"Erro operacional: {e}")
 except sqlite3.Error as e:
-    st.error(f"Erro ao conectar ao banco de dados: {e}")
+    st.error(f"Erro no banco de dados: {e}")
+except Exception as e:
+    st.error(f"Erro inesperado: {e}")
 
 
 

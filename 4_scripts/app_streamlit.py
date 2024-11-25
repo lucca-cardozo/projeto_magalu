@@ -7,9 +7,16 @@ import requests
 import json
 import sqlite3
 
-con = sqlite3.connect('banco.db')
-df = pd.read_sql('SELECT * FROM dados', con)
-df['Quantidade'] = df['Produto'].map(df['Produto'].value_counts())
+# Conexão com o banco de dados
+try:
+    con = sqlite3.connect('banco.db')
+    query = "SELECT * FROM dados"  # Altere para o nome correto da tabela
+    df = pd.read_sql_query(query, con)
+    con.close()
+except sqlite3.Error as e:
+    st.error(f"Erro ao conectar ao banco de dados: {e}")
+
+
 
 st.title('Projeto Magazine Luiza')
 

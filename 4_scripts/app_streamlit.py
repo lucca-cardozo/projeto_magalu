@@ -7,6 +7,7 @@ import requests
 import json
 import sqlite3
 
+# Abrir a conexão com o banco de dados
 con = sqlite3.connect('banco.db')
 cursor = con.cursor()
 
@@ -23,8 +24,13 @@ try:
 except sqlite3.Error as e:
     print(f"Erro ao acessar a tabela 'dados': {e}")
 
+# Fechar a conexão temporariamente após as verificações
 con.close()
 
+# Reabrir a conexão para carregar os dados com pandas
+con = sqlite3.connect('banco.db')
+
+# Tentando carregar os dados na tabela 'dados' com pandas
 try:
     df = pd.read_sql('SELECT * FROM dados', con)
     
@@ -38,7 +44,7 @@ try:
 except Exception as e:
     st.error(f"Erro ao carregar os dados: {e}")
 
-# Fechar a conexão
+# Fechar a conexão após carregar os dados
 con.close()
 
 st.title('Projeto Magazine Luiza')

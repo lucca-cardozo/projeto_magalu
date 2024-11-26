@@ -8,8 +8,22 @@ import json
 import sqlite3
 
 con = sqlite3.connect('banco.db')
-df = pd.read_sql('SELECT * FROM dados', con)
+cursor = con.cursor()
 
+# Verificando as tabelas no banco de dados
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tabelas = cursor.fetchall()
+print("Tabelas no banco de dados:", tabelas)
+
+# Verificando os primeiros registros da tabela "dados"
+try:
+    cursor.execute("SELECT * FROM dados LIMIT 5;")
+    dados = cursor.fetchall()
+    print("Primeiros dados da tabela 'dados':", dados)
+except sqlite3.Error as e:
+    print(f"Erro ao acessar a tabela 'dados': {e}")
+
+con.close()
 
 st.title('Projeto Magazine Luiza')
 

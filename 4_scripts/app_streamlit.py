@@ -22,7 +22,7 @@ tabelas = [tabela[0] for tabela in tabelas]
 if 'dados' in tabelas:
     try:
         # Carregar os dados da tabela 'dados' no DataFrame
-        df = pd.read_sql('SELECT * FROM dados', con)
+        df = pd.read_sql('SELECT * FROM Dados', con)
         
         # Exibir a tabela no Streamlit
         if df.empty:

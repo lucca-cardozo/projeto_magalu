@@ -9,7 +9,8 @@ import sqlite3
 
 # Conectar ao banco de dados SQLite
 con = sqlite3.connect('banco.db')
-df = pd.read_sql(SELECT * FROM Dados, con)
+base = 'SELECT * FROM dados'
+df = pd.read_sql(base, con)
 
 
 st.title('Projeto Magazine Luiza')

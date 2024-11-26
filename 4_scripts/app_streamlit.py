@@ -25,6 +25,22 @@ except sqlite3.Error as e:
 
 con.close()
 
+try:
+    df = pd.read_sql('SELECT * FROM dados', con)
+    
+    # Verificar se o DataFrame foi carregado corretamente
+    if df.empty:
+        st.error("A tabela 'dados' está vazia ou não foi carregada corretamente.")
+    else:
+        # Exibir a tabela no Streamlit
+        st.dataframe(df, hide_index=True)
+
+except Exception as e:
+    st.error(f"Erro ao carregar os dados: {e}")
+
+# Fechar a conexão
+con.close()
+
 st.title('Projeto Magazine Luiza')
 
 

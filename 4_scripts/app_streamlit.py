@@ -9,33 +9,7 @@ import sqlite3
 
 # Conectar ao banco de dados SQLite
 con = sqlite3.connect('banco.db')
-
-# Criar um cursor para executar comandos SQL
-cursor = con.cursor()
-
-# Verificar se a tabela 'dados' existe
-cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-tabelas = cursor.fetchall()
-tabelas = [tabela[0] for tabela in tabelas]
-
-# Verificar se a tabela 'dados' existe no banco de dados
-if 'dados' in tabelas:
-    try:
-        # Carregar os dados da tabela 'dados' no DataFrame
-        df = pd.read_sql('SELECT * FROM Dados', con)
-        
-        # Exibir a tabela no Streamlit
-        if df.empty:
-            st.error("A tabela 'dados' está vazia.")
-        else:
-            st.dataframe(df, hide_index=True)
-    except Exception as e:
-        st.error(f"Erro ao carregar os dados: {e}")
-else:
-    st.error("A tabela 'dados' não existe no banco de dados.")
-
-# Fechar a conexão com o banco de dados
-con.close()
+df = pd.read_sql('SELECT * FROM Dados', con)
 
 
 st.title('Projeto Magazine Luiza')
